@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# ##############################################################################
+#
+# bm
+#
+# Intended to reduce complexity of adding .dotfiles on a project by project
+# basis, by symlinking project `_bash` directories to a bm managed directory.
+# All symlinked directories are then recursively walked sourcing each *.sh file
+# on the way.
+#
+# ##############################################################################
+
+# ------------------------------------------------------------------------------
+# usage
+# ------------------------------------------------------------------------------
+
+function usage {
+  echo "Usage: bm <command>"
+  echo
+  echo "where <command> is one of:"
+  echo "  install, uninstall, use, list"
+}
+
+
+# ------------------------------------------------------------------------------
+# execute
+# ------------------------------------------------------------------------------
+
+LIB_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../lib" > /dev/null && pwd )"
+
+case "$1" in
+  install|uninstall) SCRIPT="$LIB_DIR/$1.sh";;
+  *) usage; return;;
+esac
+
+shift
+source "$SCRIPT"
