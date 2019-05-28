@@ -13,9 +13,16 @@
 #
 # ##############################################################################
 
-# 1. Add {{BM_PATH}} to path
-# ===
-export PATH="{{BM_PATH}}/bin":$PATH
+# ------------------------------------------------------------------------------
+# SHARED
+# ------------------------------------------------------------------------------
+
+BM_PATH="$(cd "$(dirname "${BASH_SOURCE[0]:-${(%):-%x}}")" > /dev/null && pwd -P)"
+
+
+# # 1. Add {{BM_PATH}} to path
+# # ===s
+export PATH="${BM_PATH}/bin":$PATH
 
 
 # 2. Alias `bm` to always run in current shell
@@ -26,7 +33,6 @@ alias bm='. bm'
 # 3. Source all bm packages
 # ===
 CWD=$(pwd)
-
-cd "{{BM_PATH}}/packages" > /dev/null
+cd "${BM_PATH}/packages" > /dev/null
 for f in $(find -L . -name "*.sh"); do [ -f $f ] && source "$f"; done
 cd "$CWD" > /dev/null
