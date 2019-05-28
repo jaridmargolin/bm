@@ -30,7 +30,7 @@ function usage {
 # execute
 # ------------------------------------------------------------------------------
 
-if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+if [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]]; then
   usage; return
 fi
 
@@ -45,12 +45,11 @@ while [[ $# -gt 1 ]]; do
   shift
 done
 
-PACKAGE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../packages" > /dev/null && pwd )"
+PACKAGE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]:-${(%):-%x}}" )/../packages" > /dev/null && pwd )"
 DIR="$( cd "$DIR" > /dev/null 2>&1 && pwd )"
 
 if ln -s "$DIR" "$PACKAGE_DIR/$NAME" > /dev/null 2>&1; then
   echo "✔︎ Package installed as: $NAME"
-  source ~/.bash_profile
 else
   echo "✖ Unable to install package: $NAME"
 fi

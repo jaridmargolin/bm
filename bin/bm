@@ -27,7 +27,7 @@ function usage {
 # execute
 # ------------------------------------------------------------------------------
 
-LIB_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../lib" > /dev/null && pwd )"
+LIB_DIR="$( cd "$( dirname "${BASH_SOURCE[0]:-${(%):-%x}}" )/../lib" > /dev/null && pwd )"
 
 case "$1" in
   install|uninstall) SCRIPT="$LIB_DIR/$1.sh";;
